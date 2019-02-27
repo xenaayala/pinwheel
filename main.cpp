@@ -19,7 +19,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,3);
     glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE,GL_TRUE);
 
     GLFWwindow *window=glfwCreateWindow(800,600,"Learn OpenGL",nullptr,nullptr);
     if(window==nullptr)
@@ -45,24 +45,24 @@ int main()
 
     Shader our_shader("shader.vs","shader.frag");
 
-    //4 triangles 
+    //4 triangles
     GLfloat vertices[]={
-        // positions
-       0.0f, 0.0f, 0.0f,
-       0.5f, 0.0f, 0.0f,
-       0.5f, 0.5f, 0.0f,
+        // positions     colors
+       0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+       0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+       0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-       0.0f, 0.0f, 0.0f,
-       0.0f, 0.5f, 0.0f,
-      -0.5f, 0.5f, 0.0f,
+       0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+       0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+      -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-       0.0f, 0.0f, 0.0f,
-      -0.5f, 0.0f, 0.0f,
-      -0.5f,-0.5f, 0.0f,
+       0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+      -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+      -0.5f,-0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
 
-       0.0f, 0.0f, 0.0f,
-       0.0f,-0.5f, 0.0f,
-       0.5f,-0.5f, 0.0f,
+       0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+       0.0f,-0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+       0.5f,-0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
     };
 
     GLuint VAO,VBO;
@@ -77,11 +77,11 @@ int main()
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
 
     // set position attribute pointers
-    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,3*sizeof(GL_FLOAT),(GLvoid*)0);
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,6*sizeof(GL_FLOAT),(GLvoid*)0);
     glEnableVertexAttribArray(0);
     // set color attribute pointers
-    //glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,6*sizeof(GL_FLOAT),(GLvoid*)(3*sizeof(GLfloat)));
-    //glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,6*sizeof(GL_FLOAT),(GLvoid*)(3*sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
 
     // unbind the vertex array object
     glBindVertexArray(0);
