@@ -2,6 +2,10 @@
 #include <GLFW/glfw3.h>
 #include <cmath>
 
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 
 void key_callback(GLFWwindow* window,int key,int scancode,int action,int mode)
@@ -94,6 +98,13 @@ int main()
 
         // use shader program
         our_shader.Use();
+        //generate transformation matrix
+        glm::mat4 trans(1.0f);
+        trans=glm::translate(trans,glm::vec3(0.0f,0.0f,0.0f));
+        trans=glm::rotate(trans,glm::radians((GLfloat)glfwGetTime()*50.0f),glm::vec3(0.0f,0.0f,1.0f));
+
+GLuint transform_location=glGetUniformLocation(our_shader.program,"transform");
+glUniformMatrix4fv(transform_location,1,GL_FALSE,glm::value_ptr(trans));
 
         // draw
         glBindVertexArray(VAO);
